@@ -27,11 +27,11 @@ def draw_axes_with_vectors(labels, center_point, vectors):
     glColor3f(1, 1, 1)  # White color for axes and vectors
     glBegin(GL_LINES)
     # X Axis
-    #glVertex2f(-10, 0)
-    #glVertex2f(10, 0)
+    glVertex2f(-10, 0)
+    glVertex2f(10, 0)
     # Y Axis
-    #glVertex2f(0, -10)
-    #glVertex2f(0, 10)
+    glVertex2f(0, -10)
+    glVertex2f(0, 10)
     
     for vector in vectors:
         glVertex2fv(center_point)

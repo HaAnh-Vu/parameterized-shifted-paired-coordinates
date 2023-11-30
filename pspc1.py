@@ -55,7 +55,7 @@ def project_6d_to_2d(points):
 
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (1600, 900)
     pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
     
     gluOrtho2D(-10, 10, -10, 10)
