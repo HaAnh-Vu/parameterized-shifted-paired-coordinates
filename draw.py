@@ -30,7 +30,7 @@ def draw_vectors_and_points():
     glVertex2f(0.0, 4.0)
     glEnd()
 
-    drawText(2.1, 0.0, "X1")
+    drawText(2.1, 0.0, "X1") #label
     
     # Drawing X3 and X4 in green and purple respectively
     glBegin(GL_LINES)
