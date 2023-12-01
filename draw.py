@@ -62,12 +62,38 @@ def draw_vectors_and_points():
     drawText(2.1, -1.0, "X5") #label
     drawText(-1.0, 4.1, "X6") #label
 
+    #rectangle connected line
+    glBegin(GL_LINES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(1.0, 5.0)
+    glVertex2f(3.0, 5.0)
+    glEnd()
+
+    glBegin(GL_LINES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(3.0, 5.0)
+    glVertex2f(3.0, 3.0)
+    glEnd()
+
+    glBegin(GL_LINES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(3.0, 3.0)
+    glVertex2f(1.0, 3.0)
+    glEnd()
+
+    glBegin(GL_LINES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(1.0, 3.0)
+    glVertex2f(1.0, 5.0)
+    glEnd()
+
     # Drawing the Base point = [2,4,1,7,3,5]
     glPointSize(7.0)  # Increase point size
     glBegin(GL_POINTS)
     glColor3f(1.0, 0.5, 0.0) # orange 
     glVertex2f(2.0, 4.0)
     glEnd()
+    drawText(2.1, 4.1, "(2,4,1,7,3,5)")
     glutSwapBuffers()
 
     # Drawing the point = [1,5,0,8,2,6]
@@ -75,6 +101,7 @@ def draw_vectors_and_points():
     glColor3f(1.0, 0.5, 0.0) 
     glVertex2f(1.0, 5.0)
     glEnd()
+    drawText(1.1, 5.1, "(1,5,0,8,2,6)")
     glutSwapBuffers()
 
     # Drawing the point = [3,5,2,8,4,6]
@@ -82,6 +109,7 @@ def draw_vectors_and_points():
     glColor3f(1.0, 0.5, 0.0) 
     glVertex2f(3.0, 5.0)
     glEnd()
+    drawText(3.1, 5.1, "(3,5,2,8,4,6)")
     glutSwapBuffers()
 
     # Drawing the point = [1,3,0,6,2,4]
@@ -89,6 +117,7 @@ def draw_vectors_and_points():
     glColor3f(1.0, 0.5, 0.0) 
     glVertex2f(1.0, 3.0)
     glEnd()
+    drawText(0.8, 2.8, "(1,3,0,6,2,4")
     glutSwapBuffers()
 
     # Drawing the point = [3,3,2,6,4,4]
@@ -96,6 +125,7 @@ def draw_vectors_and_points():
     glColor3f(1.0, 0.5, 0.0) 
     glVertex2f(3.0, 3.0)
     glEnd()
+    drawText(3.1, 3.1, "(3,3,2,6,4,4)")
     glutSwapBuffers()
 
 
