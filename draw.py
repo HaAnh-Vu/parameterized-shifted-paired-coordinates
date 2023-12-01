@@ -17,7 +17,7 @@ def draw_vectors_and_points():
 
     # Adjusting the viewing area to include our points
     glOrtho(-10, 10, -10, 10, -10, 10)
-
+    glLineWidth(3.0)
     # Drawing vector
     glBegin(GL_LINES)
     glColor3f(1.0, 0.0, 0.0) # red color for X1
@@ -31,6 +31,8 @@ def draw_vectors_and_points():
     glEnd()
 
     drawText(2.1, 0.0, "X1") #label
+    drawText(0.0, 4.1, "X2") #label
+
     
     # Drawing X3 and X4 in green and purple respectively
     glBegin(GL_LINES)
@@ -43,21 +45,66 @@ def draw_vectors_and_points():
     glVertex2f(1.0, 4.0)
     glEnd()
 
+    drawText(2.1, -3.0, "X3") #label
+    drawText(1.0, 4.1, "X4") #label
 
-    # Drawing the points 
-    glPointSize(10.0)  # Increase point size
+    # Drawing X5 and X6 in yellow and cyan respectively
+    glBegin(GL_LINES)
+    glColor3f(1.0, 1.0, 0.0) # yellow color for X5
+    glVertex2f(-1.0, -1.0)
+    glVertex2f(2.0, -1.0)
+    
+    glColor3f(0.0, 1.0, 1.0) # cyan color for X6
+    glVertex2f(-1.0, -1.0)
+    glVertex2f(-1.0, 4.0)
+    glEnd()
+
+    drawText(2.1, -1.0, "X5") #label
+    drawText(-1.0, 4.1, "X6") #label
+
+    # Drawing the Base point = [2,4,1,7,3,5]
+    glPointSize(7.0)  # Increase point size
     glBegin(GL_POINTS)
-    glColor3f(1.0, 0.5, 0.0) # orange color for point (2,4)
+    glColor3f(1.0, 0.5, 0.0) # orange 
     glVertex2f(2.0, 4.0)
     glEnd()
     glutSwapBuffers()
+
+    # Drawing the point = [1,5,0,8,2,6]
+    glBegin(GL_POINTS)
+    glColor3f(1.0, 0.5, 0.0) 
+    glVertex2f(1.0, 5.0)
+    glEnd()
+    glutSwapBuffers()
+
+    # Drawing the point = [3,5,2,8,4,6]
+    glBegin(GL_POINTS)
+    glColor3f(1.0, 0.5, 0.0) 
+    glVertex2f(3.0, 5.0)
+    glEnd()
+    glutSwapBuffers()
+
+    # Drawing the point = [1,3,0,6,2,4]
+    glBegin(GL_POINTS)
+    glColor3f(1.0, 0.5, 0.0) 
+    glVertex2f(1.0, 3.0)
+    glEnd()
+    glutSwapBuffers()
+
+    # Drawing the point = [3,3,2,6,4,4]
+    glBegin(GL_POINTS)
+    glColor3f(1.0, 0.5, 0.0) 
+    glVertex2f(3.0, 3.0)
+    glEnd()
+    glutSwapBuffers()
+
 
 def main():
     glutInit()
     glutInitDisplayMode(GLUT_RGBA)
     glutInitWindowSize(width, height)
     glutInitWindowPosition(window_x, window_y)
-    glutCreateWindow("OpenGL 2D Multiple Coordinate Systems")
+    glutCreateWindow("Fig 3.8")
 
     # Set the background color to white
     glClearColor(1.0, 1.0, 1.0, 1.0)
