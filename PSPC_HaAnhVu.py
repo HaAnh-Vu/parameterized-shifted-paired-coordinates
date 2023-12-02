@@ -91,7 +91,7 @@ def draw_vectors_and_points():
     glPointSize(7.0)  # Increase point size
     glBegin(GL_POINTS)
     glColor3f(1.0, 0.5, 0.0) # orange 
-    glVertex2f(2.0, 4.0)
+    glVertex2f(2.0, 4.0) #Base point
     glEnd()
     drawText(2.1, 4.1, "(2,4,1,7,3,5)")
     glutSwapBuffers()
