@@ -52,7 +52,7 @@ def draw_vectors_and_points():
     glBegin(GL_LINES)
     glColor3f(1.0, 1.0, 0.0) # yellow color for X5
     glVertex2f(-1.0, -1.0)
-    glVertex2f(2.0, -1.0)
+    glVertex2f(2.0, -1.0)       
     
     glColor3f(0.0, 1.0, 1.0) # cyan color for X6
     glVertex2f(-1.0, -1.0)

@@ -7,14 +7,14 @@ from OpenGL.GLU import *
 iris_data = pd.read_csv('Iris.csv')
 
 class_colors = {
-    'Iris-setosa': (1.0, 0.0, 0.0),  # Màu đỏ
-    'Iris-versicolor': (0.0, 1.0, 0.0),  # Màu xanh lá
-    'Iris-virginica': (0.0, 0.0, 1.0)  # Màu xanh dương
+    'Iris-setosa': (1.0, 0.0, 0.0),  # red
+    'Iris-versicolor': (0.0, 1.0, 0.0),  # green
+    'Iris-virginica': (0.0, 0.0, 1.0)  # blue
 }
 
 def draw_axes():
     
-    glColor3f(0.0, 0.0, 0.0)  # Màu đen
+    glColor3f(0.0, 0.0, 0.0)  #black
     glBegin(GL_LINES)
     # X
     glVertex2f(0.0, 0.0)
