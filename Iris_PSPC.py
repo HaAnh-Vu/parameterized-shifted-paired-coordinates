@@ -5,7 +5,7 @@ from OpenGL.GLU import *
 
 
 iris_data = pd.read_csv('Iris.csv')
-
+#iris_1= iris_data[iris_data['class'] == 'Iris-virginica']
 class_colors = {
     'Iris-setosa': (1.0, 1.0, 0.0),  #yellow
     'Iris-versicolor': (0.0, 1.0, 0.0),  #green
@@ -88,6 +88,7 @@ def draw_iris_data():
         glPointSize(0.1)
         glLineWidth(0.1)
         glColor3f(*class_colors[row['class']])
+        #glColor3f(*class_colors['Iris-virginica'])
         # Connected lines
         glBegin(GL_LINES)
         glVertex2f(row['sepal_length'], row['sepal_width'])
