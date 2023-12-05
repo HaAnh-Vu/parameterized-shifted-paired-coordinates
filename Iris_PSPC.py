@@ -16,8 +16,8 @@ iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
 iris_data.to_csv('normalized_iris.csv', index=False)
 class_colors = {
     'Iris-setosa': (1.0, 1.0, 0.0),  
-    'Iris-versicolor': (0.0, 1.0, 0.0),  
-    'Iris-virginica': (1.0, 0.0, 1.0)  
+    'Iris-versicolor': (0.0,  0.5, 0.0),  
+    'Iris-virginica': (0.0, 0.0, 0.5)#dark blue
 }
 
 
@@ -128,9 +128,9 @@ def draw_iris_data():
     for index, row in iris_data.iterrows():
         if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] <= a + 0.1) and \
            (b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] <= b + 0.1):
-            glPointSize(1)
-            glLineWidth(3)
-            glColor3f(1.0, 0.0, 0.0)  # Red for highlighted cases
+            glPointSize(1.5)
+            glLineWidth(5.0)
+            glColor3f(1.5, 0.0, 0.0)  # Red for highlighted cases
 
             glBegin(GL_LINES)
             glVertex2f(row['sepal_length'], row['sepal_width'])

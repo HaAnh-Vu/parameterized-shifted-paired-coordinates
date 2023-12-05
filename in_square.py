@@ -37,7 +37,11 @@ def find_center():
     return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']
 
 def draw_axes():
-    a, b, c, d = find_center()
+    #a, b, c, d = find_center()
+    a= 0.555555556
+    b= 0.375
+    c=0.779661017
+    d= 0.708333333
     print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
 
     glLineWidth(5.0)
@@ -96,7 +100,11 @@ def draw_axes():
     drawText(a-c,b-d+0.8+0.01, "X4")  
 
 def draw_iris_data():
-    a, b, c, d = find_center()
+    #a, b, c, d = find_center()
+    a= 0.555555556
+    b= 0.375
+    c=0.779661017
+    d= 0.708333333
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
