@@ -15,9 +15,9 @@ iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
 
 iris_data.to_csv('normalized_iris.csv', index=False)
 class_colors = {
-    'Iris-setosa': (1.0, 1.0, 0.0),  # yellow
-    'Iris-versicolor': (0.0, 1.0, 0.0),  # green
-    'Iris-virginica': (0.0, 1.0, 1.0)  # cyan
+    'Iris-setosa': (1.0, 1.0, 0.0),  
+    'Iris-versicolor': (0.0, 1.0, 0.0),  
+    'Iris-virginica': (1.0, 0.0, 1.0)  
 }
 
 
@@ -30,11 +30,15 @@ def drawText(x, y, text):
 def find_center():
     virginica_df = iris_data[iris_data['class'] == 'Iris-virginica']
     mean_values = virginica_df.drop(columns=['class']).mean()
+    mean_values['sepal_length']= 0.555555556
+    mean_values['sepal_width']= 0.375
+    mean_values['petal_length']= 0.779661017
+    mean_values['petal_width']=  0.708333333
     return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']
     
 def draw_axes():
     a, b, c, d = find_center()
-    #print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
+    print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
     glLineWidth(5.0)
     glColor3f(0.0, 0.0, 0.0)  # black
     glBegin(GL_LINES)
@@ -100,13 +104,13 @@ def draw_iris_data():
     glOrtho(-0.5, 1.2, -0.5, 1.2, -0.5, 1.2)
 
     draw_axes()
-
+    
     # Draw the rest cases
     for index, row in iris_data.iterrows():
         if not (a - 0.1 <= row['sepal_length'] <= a + 0.1) or not (a - 0.1 <= row['petal_length'] <= a + 0.1) or \
            not (b - 0.1 <= row['sepal_width'] <= b + 0.1) or not (b - 0.1 <= row['petal_width'] <= b + 0.1):
-            glPointSize(0.1)
-            glLineWidth(0.1)
+            glPointSize(0.5)
+            glLineWidth(2)
             glColor3f(*class_colors[row['class']])
 
             glBegin(GL_LINES)
@@ -124,8 +128,8 @@ def draw_iris_data():
     for index, row in iris_data.iterrows():
         if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] <= a + 0.1) and \
            (b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] <= b + 0.1):
-            glPointSize(0.1)
-            glLineWidth(0.1)
+            glPointSize(1)
+            glLineWidth(3)
             glColor3f(1.0, 0.0, 0.0)  # Red for highlighted cases
 
             glBegin(GL_LINES)
