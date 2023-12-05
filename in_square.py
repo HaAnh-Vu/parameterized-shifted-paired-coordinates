@@ -5,6 +5,7 @@ from OpenGL.GLU import *
 
 
 iris_data = pd.read_csv('Iris.csv')
+selected_points = []
 #iris_1= iris_data[iris_data['class'] == 'Iris-virginica']
 class_colors = {
     'Iris-setosa': (1.0, 1.0, 0.0),  #yellow
@@ -76,6 +77,7 @@ def draw_axes():
     drawText(a-c,b-d+8+0.1, "X4")   
 
 def draw_iris_data():
+    a, b, c, d = find_center()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
     #Screen limit
@@ -86,25 +88,32 @@ def draw_iris_data():
 
     # Dataset loading
     for index, row in iris_data.iterrows():
-        # Pick class colour 
-        glPointSize(0.1)
-        glLineWidth(0.1)
-        glColor3f(*class_colors[row['class']])
-        #glColor3f(*class_colors['Iris-virginica'])
-        # Connected lines
-        glBegin(GL_LINES)
-        glVertex2f(row['sepal_length'], row['sepal_width'])
-        glVertex2f(row['petal_length'], row['petal_width'])
-        glEnd()
-        # Points
-        glPointSize(5.0)
-        glBegin(GL_POINTS)
-        glVertex2f(row['sepal_length'], row['sepal_width'])
-        glVertex2f(row['petal_length'], row['petal_width'])
-        glEnd()
+    #filter
+        if (a-1 <= row['sepal_length'] <= a+1) and (a-1 <= row['petal_length'] <= a+1) and \
+        (b-1 <= row['sepal_width'] <= b+1) and (b-1 <= row['petal_width'] <= b+1):
+            selected_points.append(row)
+            selected_points_df = pd.DataFrame(selected_points)
+            selected_points_df.to_csv('selected_points.csv', index=False)
+            # Pick class colour 
+            glPointSize(0.1)
+            glLineWidth(0.1)
+            glColor3f(*class_colors[row['class']])
+            # Connected lines
+            glBegin(GL_LINES)
+            glVertex2f(row['sepal_length'], row['sepal_width'])
+            glVertex2f(row['petal_length'], row['petal_width'])
+            glEnd()
 
-    
+            # Points
+            glPointSize(5.0)
+            glBegin(GL_POINTS)
+            glVertex2f(row['sepal_length'], row['sepal_width'])
+            glVertex2f(row['petal_length'], row['petal_width'])
+            glEnd()
+
     glutSwapBuffers()
+
+
 
 def main():
     glutInit()
