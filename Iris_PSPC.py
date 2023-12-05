@@ -41,7 +41,7 @@ def draw_axes():
     glVertex2f(a-c, b-d)
     glVertex2f(a-c,b-d+8)
 
-    #point connected line
+    #point connected line of square
     glVertex2f(a-1, b+1)
     glVertex2f(a-1, b-1)
 
