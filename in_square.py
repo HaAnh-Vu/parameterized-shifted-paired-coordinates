@@ -101,7 +101,8 @@ def draw_iris_data():
             selected_points.append(row)
             selected_points_df = pd.DataFrame(selected_points)
             selected_points_df.to_csv('selected_points.csv', index=False)
-
+            with open('selected_points.csv', 'a') as f:
+                f.write(f'{a},{b},{c},{d},"Center Point"\n')
             glPointSize(0.1)
             glLineWidth(0.1)
             glColor3f(*class_colors[row['class']])
