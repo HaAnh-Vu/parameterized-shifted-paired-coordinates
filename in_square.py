@@ -113,21 +113,21 @@ def draw_iris_data():
     draw_axes()
 
     for index, row in iris_data.iterrows():
-        if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] <= a + 0.1) and \
-                (b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] <= b + 0.1):
+        if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= (row['petal_length'] +(a-c))<= a + 0.1) and \
+                (b - 0.1 <= row['sepal_width']  <= b + 0.1) and (b - 0.1 <= (row['petal_width'] +(b-d))<= b + 0.1):
             glPointSize(0.1)
             glLineWidth(0.1)
             glColor3f(*class_colors[row['class']])
 
             glBegin(GL_LINES)
             glVertex2f(row['sepal_length'], row['sepal_width'])
-            glVertex2f(row['petal_length'], row['petal_width'])
+            glVertex2f((row['petal_length']+(a-c)), (row['petal_width']+(b-d)))
             glEnd()
 
             glPointSize(5.0)
             glBegin(GL_POINTS)
             glVertex2f(row['sepal_length'], row['sepal_width'])
-            glVertex2f(row['petal_length'], row['petal_width'])
+            glVertex2f((row['petal_length']+(a-c)), (row['petal_width']+(b-d)))
             glEnd()
             selected_points.append(row)
             selected_points_df = pd.DataFrame(selected_points)
