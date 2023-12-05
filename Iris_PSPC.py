@@ -2,9 +2,17 @@ import pandas as pd
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
 
+# Load  dataset
 iris_data = pd.read_csv('Iris.csv')
+
+numerical_cols = iris_data.select_dtypes(include=['float64', 'int64']).columns
+
+scaler = MinMaxScaler(feature_range=(0, 1))
+iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
 #iris_1= iris_data[iris_data['class'] == 'Iris-virginica']
 class_colors = {
     'Iris-setosa': (1.0, 1.0, 0.0),  #yellow
@@ -16,70 +24,75 @@ def drawText(x, y, text):
     for character in text:
         glutBitmapCharacter(GLUT_BITMAP_8_BY_13, ord(character))
 
-def find_center(): #Find Center Point
+def find_center():
     virginica_df = iris_data[iris_data['class'] == 'Iris-virginica']
     mean_values = virginica_df.drop(columns=['class']).mean()
-    return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']  
+    return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']
 
 def draw_axes():
     a, b, c, d = find_center()
-    #print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
-    #anchor = [a,b]
+    print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
+
     glLineWidth(5.0)
-    glColor3f(0.0, 0.0, 0.0)  #black
+    glColor3f(0.0, 0.0, 0.0)  # black
     glBegin(GL_LINES)
+
     # X1
     glVertex2f(0.0, 0.0)
-    glVertex2f(9.0, 0.0)
+    glVertex2f(0.9, 0.0)
+
     # X2
     glVertex2f(0.0, 0.0)
-    glVertex2f(0.0, 9.0)
+    glVertex2f(0.0, 0.9)
+
     # X3
-    glVertex2f(a-c, b-d)
-    glVertex2f(a-c+8,b-d)
-    #X4
-    glVertex2f(a-c, b-d)
-    glVertex2f(a-c,b-d+8)
+    glVertex2f(a - c, b - d)
+    glVertex2f(a - c + 0.8, b - d)
 
-    #point connected line of square
-    glVertex2f(a-1, b+1)
-    glVertex2f(a-1, b-1)
+    # X4
+    glVertex2f(a - c , b - d)
+    glVertex2f(a - c, b - d + 0.8)
 
-    glVertex2f(a-1, b-1)
-    glVertex2f(a+1, b-1)
+    # Point connected line
+    glVertex2f(a - 0.1, b + 0.1)
+    glVertex2f(a - 0.1, b - 0.1)
 
-    glVertex2f(a+1, b-1)
-    glVertex2f(a+1, b+1)
-    
-    glVertex2f(a+1, b+1)
-    glVertex2f(a-1, b+1)
+    glVertex2f(a - 0.1, b - 0.1)
+    glVertex2f(a + 0.1, b - 0.1)
+
+    glVertex2f(a + 0.1, b - 0.1)
+    glVertex2f(a + 0.1, b + 0.1)
+
+    glVertex2f(a + 0.1, b + 0.1)
+    glVertex2f(a - 0.1, b + 0.1)
+
     glEnd()
 
-    #center point 
-    glPointSize(10.0)  # Increase point size
+    # Center point
+    glPointSize(10.0)
     glBegin(GL_POINTS)
-    glColor3f(1.0, 0.0, 0.0) 
+    glColor3f(1.0, 0.0, 0.0)
     glVertex2f(a, b)
 
     # 4 corners of the square
-    glVertex2f(a+1, b+1)
-    glVertex2f(a-1, b-1)
-    glVertex2f(a+1, b-1)
-    glVertex2f(a-1, b+1)
+    glVertex2f(a + 0.1, b + 0.1)
+    glVertex2f(a - 0.1, b - 0.1)
+    glVertex2f(a + 0.1, b - 0.1)
+    glVertex2f(a - 0.1, b + 0.1)
     glEnd()
     glutSwapBuffers()
 
-    #Label
-    drawText(9.1, 0.0, "X1") 
-    drawText(0.0, 9.1, "X2")
-    drawText(a-c+8+0.1,b-d, "X3")
-    drawText(a-c,b-d+8+0.1, "X4")   
+    # Label
+    drawText(0.91, 0.0, "X1")
+    drawText(0.0, 0.91, "X2")
+    drawText(a-c+0.8+0.01,b-d, "X3")
+    drawText(a-c,b-d+0.8+0.01, "X4")     
 
 def draw_iris_data():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
     #Screen limit
-    glOrtho(-1.0, 10.0, -1.0, 10.0, -1.0, 10.0)
+    glOrtho(-0.1, 1.1, -0.1, 1.1, -1.0, 1.0)
 
     
     draw_axes()

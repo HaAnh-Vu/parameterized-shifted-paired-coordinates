@@ -2,8 +2,15 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
+# Load  dataset
 iris_data = pd.read_csv('Iris.csv')
+
+numerical_cols = iris_data.select_dtypes(include=['float64', 'int64']).columns
+
+scaler = MinMaxScaler(feature_range=(0, 1))
+iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
 selected_points = []
 class_colors = {
     'Iris-setosa': (1.0, 1.0, 0.0),  # yellow
@@ -11,9 +18,7 @@ class_colors = {
     'Iris-virginica': (0.0, 1.0, 1.0)  # cyan
 }
 
-# Normalize the dataset by dividing all values by 10
-for column in iris_data.columns[:-1]:  # Exclude the 'class' column
-    iris_data[column] = iris_data[column] / 10.0
+# Normalized file
 
 iris_data.to_csv('normalized_iris.csv', index=False)
 
@@ -91,18 +96,13 @@ def draw_iris_data():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    glOrtho(-0.1, 1.1, -0.1, 1.1, -1.0, 1.0)
+    glOrtho(-1, 1, -1, 1, -1, 1)
 
     draw_axes()
 
     for index, row in iris_data.iterrows():
         if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] <= a + 0.1) and \
                 (b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] <= b + 0.1):
-            selected_points.append(row)
-            selected_points_df = pd.DataFrame(selected_points)
-            selected_points_df.to_csv('selected_points.csv', index=False)
-            with open('selected_points.csv', 'a') as f:
-                f.write(f'{a},{b},{c},{d},"Center Point"\n')
             glPointSize(0.1)
             glLineWidth(0.1)
             glColor3f(*class_colors[row['class']])
@@ -117,6 +117,11 @@ def draw_iris_data():
             glVertex2f(row['sepal_length'], row['sepal_width'])
             glVertex2f(row['petal_length'], row['petal_width'])
             glEnd()
+            selected_points.append(row)
+            selected_points_df = pd.DataFrame(selected_points)
+            selected_points_df.to_csv('selected_points.csv', index=False)
+            with open('selected_points.csv', 'a') as f:
+                f.write(f'{a},{b},{c},{d},"Center Point"\n')
 
     glutSwapBuffers()
 
