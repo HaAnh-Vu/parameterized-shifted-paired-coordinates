@@ -122,7 +122,6 @@ def draw_iris_data():
             selected_points_df.to_csv('selected_points.csv', index=False)
             with open('selected_points.csv', 'a') as f:
                 f.write(f'{a},{b},{c},{d},"Center Point"\n')
-
     glutSwapBuffers()
 
 def main():

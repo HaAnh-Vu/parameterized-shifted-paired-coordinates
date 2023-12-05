@@ -1,24 +1,27 @@
-import pandas as pd
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-
 # Load  dataset
 iris_data = pd.read_csv('Iris.csv')
-
+# Normalized 
 numerical_cols = iris_data.select_dtypes(include=['float64', 'int64']).columns
-
 scaler = MinMaxScaler(feature_range=(0, 1))
 iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
-#iris_1= iris_data[iris_data['class'] == 'Iris-virginica']
+
+# Normalized file
+
+iris_data.to_csv('normalized_iris.csv', index=False)
 class_colors = {
-    'Iris-setosa': (1.0, 1.0, 0.0),  #yellow
-    'Iris-versicolor': (0.0, 1.0, 0.0),  #green
-    'Iris-virginica': (0.0, 1.0, 1.0)  #cyan
+    'Iris-setosa': (1.0, 1.0, 0.0),  # yellow
+    'Iris-versicolor': (0.0, 1.0, 0.0),  # green
+    'Iris-virginica': (0.0, 1.0, 1.0)  # cyan
 }
+
+
+
 def drawText(x, y, text):
     glRasterPos2f(x, y)
     for character in text:
@@ -28,11 +31,10 @@ def find_center():
     virginica_df = iris_data[iris_data['class'] == 'Iris-virginica']
     mean_values = virginica_df.drop(columns=['class']).mean()
     return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']
-
+    
 def draw_axes():
     a, b, c, d = find_center()
-    print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
-
+    #print(f"Sepal Length: {a}, Sepal Width: {b}, Petal Length: {c}, Petal Width: {d}")
     glLineWidth(5.0)
     glColor3f(0.0, 0.0, 0.0)  # black
     glBegin(GL_LINES)
@@ -86,37 +88,41 @@ def draw_axes():
     drawText(0.91, 0.0, "X1")
     drawText(0.0, 0.91, "X2")
     drawText(a-c+0.8+0.01,b-d, "X3")
-    drawText(a-c,b-d+0.8+0.01, "X4")     
+    drawText(a-c,b-d+0.8+0.01, "X4")  
+
+selected_points = []
 
 def draw_iris_data():
+    a, b, c, d = find_center()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
-    #Screen limit
-    glOrtho(-0.1, 1.1, -0.1, 1.1, -1.0, 1.0)
 
-    
+    glOrtho(-0.5, 1.2, -0.5, 1.2, -0.5, 1.2)
+
     draw_axes()
 
-    # Dataset loading
     for index, row in iris_data.iterrows():
-        # Pick class colour 
+        #if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] <= a + 0.1) and \
+                #(b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] <= b + 0.1):
         glPointSize(0.1)
         glLineWidth(0.1)
         glColor3f(*class_colors[row['class']])
-        #glColor3f(*class_colors['Iris-virginica'])
-        # Connected lines
+
         glBegin(GL_LINES)
         glVertex2f(row['sepal_length'], row['sepal_width'])
         glVertex2f(row['petal_length'], row['petal_width'])
         glEnd()
-        # Points
+
         glPointSize(5.0)
         glBegin(GL_POINTS)
         glVertex2f(row['sepal_length'], row['sepal_width'])
         glVertex2f(row['petal_length'], row['petal_width'])
         glEnd()
-
-    
+        selected_points.append(row)
+        selected_points_df = pd.DataFrame(selected_points)
+        selected_points_df.to_csv('selected_points.csv', index=False)
+        with open('selected_points.csv', 'a') as f:
+            f.write(f'{a},{b},{c},{d},"Center Point"\n')
     glutSwapBuffers()
 
 def main():
