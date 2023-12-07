@@ -7,20 +7,21 @@ from sklearn.preprocessing import MinMaxScaler
 # Load  dataset
 iris_data = pd.read_csv('Iris.csv')
 
-numerical_cols = iris_data.select_dtypes(include=['float64', 'int64']).columns
 
+# Normalized dataset to [0,1]
+numerical_cols = iris_data.select_dtypes(include=['float64', 'int64']).columns
 scaler = MinMaxScaler(feature_range=(0, 1))
 iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
-selected_points = []
+selected_points = [] #Generate array to record the point inside rectangle
+#Set class colors
 class_colors = {
     'Iris-setosa': (1.0, 1.0, 0.0),  # yellow
     'Iris-versicolor': (0.0, 0.0, 0.0),  # green
     'Iris-virginica': (1.0, 0.0, 0.0)  # cyan
 }
 
-# Normalized file
 
-iris_data.to_csv('normalized_iris.csv', index=False)
+iris_data.to_csv('normalized_iris.csv', index=False) # Normalized save file
 
 def drawText(x, y, text):
     glRasterPos2f(x, y)
@@ -30,10 +31,13 @@ def drawText(x, y, text):
 def find_center():
     virginica_df = iris_data[iris_data['class'] == 'Iris-virginica']
     mean_values = virginica_df.drop(columns=['class']).mean()
+
+    #If you want to adjust the center point coordinate, edit 4 lines below
     # mean_values['sepal_length']= 0.555555556
     # mean_values['sepal_width']= 0.375
     # mean_values['petal_length']= 0.779661017
     # mean_values['petal_width']=  0.708333333
+    
     return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']
 
 def draw_axes():
