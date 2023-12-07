@@ -15,12 +15,16 @@ iris_data[numerical_cols] = scaler.fit_transform(iris_data[numerical_cols])
 
 iris_data.to_csv('normalized_iris.csv', index=False)
 class_colors = {
-    'Iris-setosa': (1.0, 1.0, 0.0),  
-    'Iris-versicolor': (0.0,  0.5, 0.0),  
+    'Iris-setosa': (0, 0.5, 0.0),  
+    'Iris-versicolor': (0.5 , 1, 0.0),  
     'Iris-virginica': (0.0, 0.0, 0.5)#dark blue
 }
 
-
+class_highlight = {
+    'Iris-setosa': (0, 0, 0.0),  
+    'Iris-versicolor': (0,  0, 0.0),  
+    'Iris-virginica': (1.0, 0.0, 0.0)
+}
 
 def drawText(x, y, text):
     glRasterPos2f(x, y)
@@ -30,10 +34,10 @@ def drawText(x, y, text):
 def find_center():
     virginica_df = iris_data[iris_data['class'] == 'Iris-virginica']
     mean_values = virginica_df.drop(columns=['class']).mean()
-    mean_values['sepal_length']= 0.555555556
-    mean_values['sepal_width']= 0.375
-    mean_values['petal_length']= 0.779661017
-    mean_values['petal_width']=  0.708333333
+    # mean_values['sepal_length']= 0.545
+    # mean_values['sepal_width']= 0.363333
+    # mean_values['petal_length']= 0.662034
+    # mean_values['petal_width']=  0.656667
     return mean_values['sepal_length'], mean_values['sepal_width'], mean_values['petal_length'], mean_values['petal_width']
     
 def draw_axes():
@@ -53,11 +57,11 @@ def draw_axes():
 
     # X3
     glVertex2f(a - c, b - d)
-    glVertex2f(a - c + 0.8, b - d)
+    glVertex2f(a - c + 1, b - d)
 
     # X4
     glVertex2f(a - c , b - d)
-    glVertex2f(a - c, b - d + 0.8)
+    glVertex2f(a - c, b - d + 1)
 
     # Point connected line
     glVertex2f(a - 0.1, b + 0.1)
@@ -91,8 +95,8 @@ def draw_axes():
     # Label
     drawText(0.91, 0.0, "X1")
     drawText(0.0, 0.91, "X2")
-    drawText(a-c+0.8+0.01,b-d, "X3")
-    drawText(a-c,b-d+0.8+0.01, "X4")  
+    drawText(a-c+1+0.01,b-d, "X3")
+    drawText(a-c,b-d+1+0.01, "X4")  
 
 selected_points = []
 
@@ -107,40 +111,40 @@ def draw_iris_data():
     
     # Draw the rest cases
     for index, row in iris_data.iterrows():
-        if not (a - 0.1 <= row['sepal_length'] <= a + 0.1) or not (a - 0.1 <= row['petal_length'] <= a + 0.1) or \
-           not (b - 0.1 <= row['sepal_width'] <= b + 0.1) or not (b - 0.1 <= row['petal_width'] <= b + 0.1):
+        if not (a - 0.1 <= row['sepal_length'] <= a + 0.1) or not (a - 0.1 <= row['petal_length']+(a-c) <= a + 0.1) or \
+           not (b - 0.1 <= row['sepal_width'] <= b + 0.1) or not (b - 0.1 <= row['petal_width'] +(b-d)<= b + 0.1):
             glPointSize(0.5)
             glLineWidth(2)
             glColor3f(*class_colors[row['class']])
 
             glBegin(GL_LINES)
             glVertex2f(row['sepal_length'], row['sepal_width'])
-            glVertex2f(row['petal_length'], row['petal_width'])
+            glVertex2f(row['petal_length']+(a-c), row['petal_width']+(b-d))
             glEnd()
 
             glPointSize(5.0)
             glBegin(GL_POINTS)
             glVertex2f(row['sepal_length'], row['sepal_width'])
-            glVertex2f(row['petal_length'], row['petal_width'])
+            glVertex2f(row['petal_length']+(a-c), row['petal_width']+(b-d))
             glEnd()
 
     # Draw the highlighted cases on top
     for index, row in iris_data.iterrows():
-        if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] <= a + 0.1) and \
-           (b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] <= b + 0.1):
-            glPointSize(1.5)
+        if (a - 0.1 <= row['sepal_length'] <= a + 0.1) and (a - 0.1 <= row['petal_length'] +(a-c)<= a + 0.1) and \
+           (b - 0.1 <= row['sepal_width'] <= b + 0.1) and (b - 0.1 <= row['petal_width'] +(b-d)<= b + 0.1):
+            glPointSize(5.5)
             glLineWidth(5.0)
-            glColor3f(1.5, 0.0, 0.0)  # Red for highlighted cases
+            glColor3f(*class_highlight[row['class']])  # Red for highlighted cases
 
             glBegin(GL_LINES)
             glVertex2f(row['sepal_length'], row['sepal_width'])
-            glVertex2f(row['petal_length'], row['petal_width'])
+            glVertex2f(row['petal_length']+(a-c), row['petal_width']+(b-d))
             glEnd()
 
-            glPointSize(5.0)
+            glPointSize(5.5)
             glBegin(GL_POINTS)
             glVertex2f(row['sepal_length'], row['sepal_width'])
-            glVertex2f(row['petal_length'], row['petal_width'])
+            glVertex2f(row['petal_length']+(a-c), row['petal_width']+(b-d))
             glEnd()
 
     glutSwapBuffers()
