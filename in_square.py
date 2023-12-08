@@ -54,11 +54,11 @@ def draw_axes():
 
     # X1
     glVertex2f(0.0, 0.0)
-    glVertex2f(1.05, 0.0)
+    glVertex2f(1.0, 0.0)
 
     # X2
     glVertex2f(0.0, 0.0)
-    glVertex2f(0.0, 1.05)
+    glVertex2f(0.0, 1.0)
 
     # X3
     glVertex2f(a - c, b - d)
@@ -98,8 +98,8 @@ def draw_axes():
     glutSwapBuffers()
 
     # Label
-    drawText(0.91, 0.0, "X1")
-    drawText(0.0, 0.91, "X2")
+    drawText(1.01, 0.0, "X1")
+    drawText(0.0, 1.01, "X2")
     drawText(a-c+0.8+0.01,b-d, "X3")
     drawText(a-c,b-d+0.8+0.01, "X4")  
 
@@ -112,7 +112,7 @@ def draw_iris_data():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    glOrtho(-1, 1, -1, 1, -1, 1)
+    glOrtho(-1, 1.2, -1, 1.2, -1, 1.2)
 
     draw_axes()
 

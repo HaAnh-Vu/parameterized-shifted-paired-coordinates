@@ -103,8 +103,8 @@ def draw_axes():
     glutSwapBuffers()
 
     # Label
-    drawText(0.91, 0.0, "X1")
-    drawText(0.0, 0.91, "X2")
+    drawText(1.01, 0.0, "X1")
+    drawText(0.0, 1.01, "X2")
     drawText(a-c+1+0.01,b-d, "X3")
     drawText(a-c,b-d+1+0.01, "X4")  
 
